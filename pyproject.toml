@@ -14,13 +14,17 @@ dependencies = [
 dev = [
     "poethepoet>=0.41.0",
     "ruff>=0.15.1",
+    "vulture>=2.14",
 ]
 
 
 [tool.poe.tasks]
-download = "python -c 'import pretrained'"
+download = "python -c 'from pretrained import load_from_hf ; load_from_hf(\"anuashok/ocr-captcha-v3\")'"
+download-v2 = "python -c 'from pretrained import load_from_hf ; load_from_hf(\"anuashok/ocr-captcha-v2\")'"
 typecheck = "ty check"
-lint = ["ruff:check", "typecheck"]
+
+vulture = "vulture ."
+lint = ["ruff:check", "typecheck", "vulture"]
 fix = ["ruff:format", "ruff:fix", "typecheck"]
 
 [tool.poe.tasks."ruff:format"]
